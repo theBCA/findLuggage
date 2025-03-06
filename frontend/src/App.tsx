@@ -9,9 +9,24 @@ import Register from './components/Register';
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-gray-100">
-        <Navbar />
-        <div className="container mx-auto px-4 py-8">
+      <div className="min-h-screen bg-gray-50">
+        <nav className="bg-white shadow-md">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between h-16">
+              <div className="flex items-center">
+                <Link to="/" className="text-xl font-bold text-blue-600">LostLuggage</Link>
+              </div>
+              <div className="flex items-center space-x-4">
+                <Link to="/report" className="text-gray-600 hover:text-gray-900">Report Lost Luggage</Link>
+                <Link to="/search" className="text-gray-600 hover:text-gray-900">Search</Link>
+                <Link to="/login" className="text-gray-600 hover:text-gray-900">Login</Link>
+                <Link to="/register" className="btn btn-primary">Register</Link>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <Routes>
             <Route path="/" element={
               <div className="text-center">
@@ -20,26 +35,26 @@ function App() {
                   Help us reunite travelers with their lost luggage
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                  <div className="bg-white rounded-lg shadow-lg p-8 transform transition duration-300 hover:scale-105">
+                  <div className="card card-hover">
                     <h2 className="text-2xl font-bold text-gray-900 mb-4">Report Lost Luggage</h2>
                     <p className="text-gray-600 mb-6">
                       Lost your luggage? File a detailed report to help us locate it.
                     </p>
                     <Link
                       to="/report"
-                      className="inline-block bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out transform hover:-translate-y-1"
+                      className="btn btn-primary"
                     >
                       File Report
                     </Link>
                   </div>
-                  <div className="bg-white rounded-lg shadow-lg p-8 transform transition duration-300 hover:scale-105">
+                  <div className="card card-hover">
                     <h2 className="text-2xl font-bold text-gray-900 mb-4">Search Lost Luggage</h2>
                     <p className="text-gray-600 mb-6">
                       Looking for reported luggage? Search our database.
                     </p>
                     <Link
                       to="/search"
-                      className="inline-block bg-green-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-green-700 transition duration-300 ease-in-out transform hover:-translate-y-1"
+                      className="btn btn-secondary"
                     >
                       Search
                     </Link>
@@ -52,7 +67,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Routes>
-        </div>
+        </main>
       </div>
     </Router>
   );
