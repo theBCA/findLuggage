@@ -1,156 +1,90 @@
 import express from 'express';
 import { auth } from '../middleware/auth.js';
-import Luggage from '../models/luggage.js';
+import Luggage from '../models/Luggage.js';
 
 const router = express.Router();
 
-// Get all luggage reports (with advanced search and filter)
+// Get all luggage with filters
 router.get('/', async (req, res) => {
   try {
-    const {
-      search,
-      status,
-      size,
-      color,
-      brand,
-      dateFrom,
-      dateTo,
-      location,
-      tags,
-      sortBy = 'lastSeen.date',
-      sortOrder = 'desc',
-      page = 1,
-      limit = 10
-    } = req.query;
+    console.log('GET /api/luggage - Starting request');
+    const { status, type, color, date, location, page = 1, limit = 10 } = req.query;
+    
+    // Build filter object
+    const filter = {};
+    if (status) filter.status = status;
+    if (type) filter.type = type;
+    if (color) filter.color = color;
+    if (date) filter.dateFound = new Date(date);
+    if (location) filter.location = location;
 
-    const query = {};
+    console.log('Filter object:', filter);
 
-    // Text search across multiple fields
-    if (search) {
-      query.$text = { $search: search };
-    }
-
-    // Status filter
-    if (status) {
-      query.status = status;
-    }
-
-    // Size filter
-    if (size) {
-      query.size = size;
-    }
-
-    // Color filter (case-insensitive)
-    if (color) {
-      query.color = new RegExp(color, 'i');
-    }
-
-    // Brand filter (case-insensitive)
-    if (brand) {
-      query.brand = new RegExp(brand, 'i');
-    }
-
-    // Date range filter
-    if (dateFrom || dateTo) {
-      query['lastSeen.date'] = {};
-      if (dateFrom) {
-        query['lastSeen.date'].$gte = new Date(dateFrom);
-      }
-      if (dateTo) {
-        query['lastSeen.date'].$lte = new Date(dateTo);
-      }
-    }
-
-    // Location filter (case-insensitive)
-    if (location) {
-      query['lastSeen.location'] = new RegExp(location, 'i');
-    }
-
-    // Tags filter (multiple tags supported)
-    if (tags) {
-      const tagArray = tags.split(',').map(tag => tag.trim());
-      query.tags = { $in: tagArray };
-    }
-
-    // Sort options
-    const sortOptions = {};
-    sortOptions[sortBy] = sortOrder === 'desc' ? -1 : 1;
-
-    // Pagination
+    // Calculate pagination
     const skip = (parseInt(page) - 1) * parseInt(limit);
-
-    // Execute query with pagination and sorting
-    const luggage = await Luggage.find(query)
-      .sort(sortOptions)
-      .skip(skip)
-      .limit(parseInt(limit))
-      .populate('owner', 'name email phone');
+    const limitValue = parseInt(limit);
 
     // Get total count for pagination
-    const total = await Luggage.countDocuments(query);
+    const total = await Luggage.countDocuments(filter);
+    console.log('Total documents:', total);
+    const totalPages = Math.ceil(total / limitValue);
+
+    // Get filtered luggage with pagination
+    const luggage = await Luggage.find(filter)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limitValue);
+
+    console.log('Found luggage items:', luggage.length);
 
     res.json({
-      success: true,
-      count: luggage.length,
+      luggage,
       total,
-      page: parseInt(page),
-      totalPages: Math.ceil(total / parseInt(limit)),
-      data: luggage
+      totalPages,
+      currentPage: parseInt(page)
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: error.message
-    });
+    console.error('Error in GET /api/luggage:', error);
+    res.status(500).json({ message: error.message });
   }
 });
 
-// Create a new luggage report
-router.post('/', auth, async (req, res) => {
-  try {
-    const luggage = new Luggage({
-      ...req.body,
-      owner: req.user._id,
-      reportNumber: `LUG${Date.now()}`,
-    });
-
-    const savedLuggage = await luggage.save();
-    res.status(201).json(savedLuggage);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-});
-
-// Get a specific luggage report
+// Get single luggage by ID
 router.get('/:id', async (req, res) => {
   try {
-    const luggage = await Luggage.findById(req.params.id)
-      .populate('owner', 'name email');
-    
+    const luggage = await Luggage.findById(req.params.id);
     if (!luggage) {
       return res.status(404).json({ message: 'Luggage not found' });
     }
-    
     res.json(luggage);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
-// Update a luggage report
-router.patch('/:id', auth, async (req, res) => {
+// Create new luggage report (protected route)
+router.post('/', auth, async (req, res) => {
+  try {
+    const luggage = new Luggage({
+      ...req.body,
+      createdBy: req.user.userId
+    });
+    const newLuggage = await luggage.save();
+    res.status(201).json(newLuggage);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// Update luggage status (protected route)
+router.patch('/:id/status', auth, async (req, res) => {
   try {
     const luggage = await Luggage.findById(req.params.id);
-    
     if (!luggage) {
       return res.status(404).json({ message: 'Luggage not found' });
     }
-
-    if (luggage.owner.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
-      return res.status(403).json({ message: 'Not authorized' });
-    }
-
-    Object.assign(luggage, req.body);
+    
+    luggage.status = req.body.status;
     const updatedLuggage = await luggage.save();
     res.json(updatedLuggage);
   } catch (error) {

@@ -1,46 +1,46 @@
 import mongoose from 'mongoose';
 
 const luggageSchema = new mongoose.Schema({
-  reportNumber: {
+  type: {
     type: String,
     required: true,
-    unique: true,
-  },
-  owner: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
-  status: {
-    type: String,
-    enum: ['lost', 'found', 'claimed'],
-    default: 'lost',
-  },
-  description: {
-    type: String,
-    required: true,
+    enum: ['suitcase', 'backpack', 'handbag', 'other']
   },
   color: {
     type: String,
-    required: true,
+    required: true
   },
   brand: String,
-  size: {
+  description: {
     type: String,
-    enum: ['small', 'medium', 'large'],
-    required: true,
+    required: true
   },
-  lastSeen: {
-    location: String,
-    date: Date,
+  status: {
+    type: String,
+    required: true,
+    enum: ['lost', 'found', 'claimed'],
+    default: 'lost'
+  },
+  location: {
+    type: String,
+    required: true
+  },
+  dateFound: {
+    type: Date,
+    required: true
+  },
+  contactInfo: {
+    name: String,
+    email: String,
+    phone: String
   },
   images: [{
-    type: String, // URL to the image
+    type: String
   }],
-  additionalDetails: String,
-  tags: [String],
-}, {
-  timestamps: true,
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 // Create a text index for search functionality
@@ -48,8 +48,7 @@ luggageSchema.index({
   description: 'text',
   color: 'text',
   brand: 'text',
-  'lastSeen.location': 'text',
-  tags: 'text',
+  location: 'text',
 });
 
 export default mongoose.model('Luggage', luggageSchema); 

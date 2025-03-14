@@ -1,31 +1,34 @@
 import React, { useState } from 'react';
 
 interface SearchFormData {
-  brand: string;
+  type: string;
   color: string;
-  airportLocation: string;
-  dateLost: string;
+  location: string;
+  dateFound: string;
 }
 
 interface LuggageReport {
-  id: number;
-  status: string;
-  airport_location: string;
-  date_lost: string;
-  brand: string;
+  _id: string;
+  type: string;
   color: string;
-  size: string;
-  weight: string;
-  distinctive_features: string;
-  contents_description: string;
+  brand: string;
+  description: string;
+  status: string;
+  location: string;
+  dateFound: string;
+  contactInfo: {
+    name: string;
+    email: string;
+    phone: string;
+  };
 }
 
 const LuggageSearch: React.FC = () => {
   const [searchData, setSearchData] = useState<SearchFormData>({
-    brand: '',
+    type: '',
     color: '',
-    airportLocation: '',
-    dateLost: '',
+    location: '',
+    dateFound: '',
   });
 
   const [searchResults, setSearchResults] = useState<LuggageReport[]>([]);
@@ -41,11 +44,11 @@ const LuggageSearch: React.FC = () => {
         if (value) queryParams.append(key, value);
       });
 
-      const response = await fetch(`http://localhost:3001/api/luggage/search?${queryParams}`);
+      const response = await fetch(`http://localhost:5000/api/luggage?${queryParams}`);
       
       if (response.ok) {
         const data = await response.json();
-        setSearchResults(data);
+        setSearchResults(data.luggage);
       } else {
         alert('Error searching for luggage');
       }
@@ -57,7 +60,7 @@ const LuggageSearch: React.FC = () => {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setSearchData(prev => ({
       ...prev,
@@ -73,15 +76,19 @@ const LuggageSearch: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2">
-              Brand
-              <input
-                type="text"
-                name="brand"
-                value={searchData.brand}
+              Type
+              <select
+                name="type"
+                value={searchData.type}
                 onChange={handleChange}
                 className="w-full p-2 border rounded"
-                placeholder="Enter brand name"
-              />
+              >
+                <option value="">Select type</option>
+                <option value="suitcase">Suitcase</option>
+                <option value="backpack">Backpack</option>
+                <option value="handbag">Handbag</option>
+                <option value="other">Other</option>
+              </select>
             </label>
           </div>
 
@@ -101,25 +108,25 @@ const LuggageSearch: React.FC = () => {
 
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2">
-              Airport Location
+              Location
               <input
                 type="text"
-                name="airportLocation"
-                value={searchData.airportLocation}
+                name="location"
+                value={searchData.location}
                 onChange={handleChange}
                 className="w-full p-2 border rounded"
-                placeholder="Enter airport name"
+                placeholder="Enter location"
               />
             </label>
           </div>
 
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2">
-              Date Lost
+              Date Found
               <input
                 type="date"
-                name="dateLost"
-                value={searchData.dateLost}
+                name="dateFound"
+                value={searchData.dateFound}
                 onChange={handleChange}
                 className="w-full p-2 border rounded"
               />
@@ -141,26 +148,21 @@ const LuggageSearch: React.FC = () => {
           <h3 className="text-xl font-bold mb-4">Search Results</h3>
           <div className="space-y-4">
             {searchResults.map((result) => (
-              <div key={result.id} className="border-b pb-4">
+              <div key={result._id} className="border-b pb-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <p><strong>Brand:</strong> {result.brand}</p>
+                    <p><strong>Type:</strong> {result.type}</p>
                     <p><strong>Color:</strong> {result.color}</p>
-                    <p><strong>Size:</strong> {result.size}</p>
-                    <p><strong>Weight:</strong> {result.weight}kg</p>
+                    <p><strong>Brand:</strong> {result.brand}</p>
+                    <p><strong>Description:</strong> {result.description}</p>
                   </div>
                   <div>
                     <p><strong>Status:</strong> {result.status}</p>
-                    <p><strong>Airport:</strong> {result.airport_location}</p>
-                    <p><strong>Date Lost:</strong> {new Date(result.date_lost).toLocaleDateString()}</p>
+                    <p><strong>Location:</strong> {result.location}</p>
+                    <p><strong>Date Found:</strong> {new Date(result.dateFound).toLocaleDateString()}</p>
+                    <p><strong>Contact:</strong> {result.contactInfo.name} ({result.contactInfo.email})</p>
                   </div>
                 </div>
-                {result.distinctive_features && (
-                  <p className="mt-2"><strong>Distinctive Features:</strong> {result.distinctive_features}</p>
-                )}
-                {result.contents_description && (
-                  <p className="mt-2"><strong>Contents:</strong> {result.contents_description}</p>
-                )}
               </div>
             ))}
           </div>

@@ -1,16 +1,16 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/user');
+import jwt from 'jsonwebtoken';
+import User from '../models/User.js';
 
-const auth = async (req, res, next) => {
+export const auth = async (req, res, next) => {
     try {
         const token = req.header('Authorization')?.replace('Bearer ', '');
         
         if (!token) {
-            throw new Error();
+            return res.status(401).json({ message: 'No authentication token, access denied' });
         }
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const user = await User.findOne({ _id: decoded.userId });
+        const verified = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
+        const user = await User.findOne({ _id: verified.userId });
 
         if (!user) {
             throw new Error();
@@ -20,11 +20,11 @@ const auth = async (req, res, next) => {
         req.user = user;
         next();
     } catch (error) {
-        res.status(401).json({ error: 'Please authenticate.' });
+        res.status(401).json({ message: 'Token verification failed, authorization denied' });
     }
 };
 
-const isAdmin = async (req, res, next) => {
+export const isAdmin = async (req, res, next) => {
     try {
         if (req.user.role !== 'admin') {
             return res.status(403).json({ error: 'Access denied. Admin privileges required.' });
@@ -33,9 +33,4 @@ const isAdmin = async (req, res, next) => {
     } catch (error) {
         res.status(500).json({ error: 'Server error' });
     }
-};
-
-module.exports = {
-    auth,
-    isAdmin
 }; 
