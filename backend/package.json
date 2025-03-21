@@ -8,6 +8,7 @@
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
     "seed": "node src/scripts/seedDatabase.js",
+    "seed-luggage": "node src/utils/seedData.js",
     "test-search": "node src/scripts/testSearch.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTypedTranslation } from '../utils/translation';
 
 interface SearchFormData {
   type: string;
@@ -24,6 +25,7 @@ interface LuggageReport {
 }
 
 const LuggageSearch: React.FC = () => {
+  const { t } = useTypedTranslation();
   const [searchData, setSearchData] = useState<SearchFormData>({
     type: '',
     color: '',
@@ -50,11 +52,11 @@ const LuggageSearch: React.FC = () => {
         const data = await response.json();
         setSearchResults(data.luggage);
       } else {
-        alert('Error searching for luggage');
+        alert(t('common.error'));
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('Error searching for luggage');
+      alert(t('common.error'));
     } finally {
       setIsLoading(false);
     }
@@ -71,58 +73,58 @@ const LuggageSearch: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto p-6">
       <form onSubmit={handleSubmit} className="mb-8 bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-2xl font-bold mb-6">Search Lost Luggage</h2>
+        <h2 className="text-2xl font-bold mb-6">{t('luggage.searchLuggage')}</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2">
-              Type
+              {t('luggage.type')}
               <select
                 name="type"
                 value={searchData.type}
                 onChange={handleChange}
                 className="w-full p-2 border rounded"
               >
-                <option value="">Select type</option>
-                <option value="suitcase">Suitcase</option>
-                <option value="backpack">Backpack</option>
-                <option value="handbag">Handbag</option>
-                <option value="other">Other</option>
+                <option value="">{t('luggage.selectType')}</option>
+                <option value="suitcase">{t('luggage.types.suitcase')}</option>
+                <option value="backpack">{t('luggage.types.backpack')}</option>
+                <option value="handbag">{t('luggage.types.handbag')}</option>
+                <option value="other">{t('luggage.types.other')}</option>
               </select>
             </label>
           </div>
 
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2">
-              Color
+              {t('luggage.color')}
               <input
                 type="text"
                 name="color"
                 value={searchData.color}
                 onChange={handleChange}
                 className="w-full p-2 border rounded"
-                placeholder="Enter color"
+                placeholder={t('luggage.enterColor')}
               />
             </label>
           </div>
 
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2">
-              Location
+              {t('luggage.location')}
               <input
                 type="text"
                 name="location"
                 value={searchData.location}
                 onChange={handleChange}
                 className="w-full p-2 border rounded"
-                placeholder="Enter location"
+                placeholder={t('luggage.enterLocation')}
               />
             </label>
           </div>
 
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2">
-              Date Found
+              {t('luggage.dateFound')}
               <input
                 type="date"
                 name="dateFound"
@@ -139,28 +141,28 @@ const LuggageSearch: React.FC = () => {
           className="mt-4 w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors"
           disabled={isLoading}
         >
-          {isLoading ? 'Searching...' : 'Search'}
+          {isLoading ? t('common.loading') : t('luggage.searchButton')}
         </button>
       </form>
 
       {searchResults.length > 0 && (
         <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-xl font-bold mb-4">Search Results</h3>
+          <h3 className="text-xl font-bold mb-4">{t('luggage.searchResults')}</h3>
           <div className="space-y-4">
             {searchResults.map((result) => (
               <div key={result._id} className="border-b pb-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <p><strong>Type:</strong> {result.type}</p>
-                    <p><strong>Color:</strong> {result.color}</p>
-                    <p><strong>Brand:</strong> {result.brand}</p>
-                    <p><strong>Description:</strong> {result.description}</p>
+                    <p><strong>{t('luggage.type')}:</strong> {t(`luggage.types.${result.type}`)}</p>
+                    <p><strong>{t('luggage.color')}:</strong> {result.color}</p>
+                    <p><strong>{t('luggage.brand')}:</strong> {result.brand}</p>
+                    <p><strong>{t('luggage.description')}:</strong> {result.description}</p>
                   </div>
                   <div>
-                    <p><strong>Status:</strong> {result.status}</p>
-                    <p><strong>Location:</strong> {result.location}</p>
-                    <p><strong>Date Found:</strong> {new Date(result.dateFound).toLocaleDateString()}</p>
-                    <p><strong>Contact:</strong> {result.contactInfo.name} ({result.contactInfo.email})</p>
+                    <p><strong>{t('luggage.status')}:</strong> {t(`luggage.statuses.${result.status}`)}</p>
+                    <p><strong>{t('luggage.location')}:</strong> {result.location}</p>
+                    <p><strong>{t('luggage.dateFound')}:</strong> {new Date(result.dateFound).toLocaleDateString()}</p>
+                    <p><strong>{t('luggage.contactInfo')}:</strong> {result.contactInfo.name} ({result.contactInfo.email})</p>
                   </div>
                 </div>
               </div>
@@ -171,7 +173,7 @@ const LuggageSearch: React.FC = () => {
 
       {searchResults.length === 0 && !isLoading && (
         <div className="text-center text-gray-600">
-          No results found. Try adjusting your search criteria.
+          {t('luggage.noResults')}
         </div>
       )}
     </div>

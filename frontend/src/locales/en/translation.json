@@ -1,0 +1,98 @@
+{
+  "common": {
+    "appName": "Lost Luggage",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success"
+  },
+  "navigation": {
+    "home": "Home",
+    "report": "Report Lost Luggage",
+    "search": "Search",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout"
+  },
+  "home": {
+    "welcome": "Welcome to Lost Luggage",
+    "subtitle": "Help us reunite travelers with their lost luggage",
+    "reportLuggage": "Report Lost Luggage",
+    "reportDescription": "Lost your luggage? File a detailed report to help us locate it.",
+    "fileReport": "File Report",
+    "searchLuggage": "Search Lost Luggage",
+    "searchDescription": "Looking for reported luggage? Search our database.",
+    "searchButton": "Search"
+  },
+  "auth": {
+    "registerTitle": "Register",
+    "loginTitle": "Login",
+    "name": "Full Name",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "haveAccount": "Already have an account?",
+    "loginHere": "Login here",
+    "noAccount": "Don't have an account?",
+    "registerHere": "Register here",
+    "otpTitle": "Verify Your Email",
+    "otpMessage": "We've sent a verification code to",
+    "otpPlaceholder": "Enter 6-digit code",
+    "otpVerify": "Verify Email",
+    "otpResend": "Resend verification code",
+    "otpBack": "Back",
+    "passwordsDoNotMatch": "Passwords do not match",
+    "registrationFailed": "Registration failed",
+    "registrationInitiated": "Registration initiated! Please verify your email with the OTP sent.",
+    "verificationFailed": "Verification failed",
+    "emailVerified": "Email verified successfully! Redirecting to home page...",
+    "resendOtpFailed": "Failed to resend verification code",
+    "otpResendSuccess": "Verification code sent successfully!",
+    "verifyEmail": "Please verify your email. A new verification code has been sent.",
+    "loginSuccess": "Login successful! Redirecting to home page..."
+  },
+  "luggage": {
+    "type": "Type",
+    "color": "Color",
+    "brand": "Brand",
+    "description": "Description",
+    "status": "Status",
+    "location": "Location",
+    "dateFound": "Date Found",
+    "contactInfo": "Contact Information",
+    "types": {
+      "suitcase": "Suitcase",
+      "backpack": "Backpack",
+      "handbag": "Handbag",
+      "other": "Other"
+    },
+    "statuses": {
+      "lost": "Lost",
+      "found": "Found",
+      "claimed": "Claimed"
+    },
+    "reportButton": "Submit Report",
+    "searchButton": "Search",
+    "filterButton": "Filter Results",
+    "clearButton": "Clear Filters",
+    "noResults": "No luggage items found matching your criteria.",
+    "searchLuggage": "Search Lost Luggage",
+    "searchResults": "Search Results",
+    "selectType": "Select type",
+    "enterColor": "Enter color",
+    "enterLocation": "Enter location",
+    "reportLuggage": "Report Lost Luggage",
+    "size": "Size",
+    "weight": "Weight (kg)",
+    "airportLocation": "Airport Location",
+    "dateLost": "Date Lost",
+    "distinctiveFeatures": "Distinctive Features",
+    "contentsDescription": "Contents Description",
+    "reportSuccess": "Luggage report submitted successfully!"
+  },
+  "language": {
+    "languageSelector": "Language",
+    "english": "English",
+    "turkish": "Turkish",
+    "german": "German"
+  }
+} 

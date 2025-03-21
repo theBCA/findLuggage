@@ -1,12 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Navbar from './components/Navbar';
 import LuggageForm from './components/LuggageForm';
 import LuggageSearch from './components/LuggageSearch';
 import Login from './components/Login';
 import Register from './components/Register';
+import LanguageSelector from './components/LanguageSelector';
+import { useTypedTranslation } from './utils/translation';
 
 function App() {
+  const { t } = useTypedTranslation();
+  
   return (
     <Router>
       <div className="min-h-screen bg-gray-50">
@@ -14,13 +17,14 @@ function App() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between h-16">
               <div className="flex items-center">
-                <Link to="/" className="text-xl font-bold text-blue-600">LostLuggage</Link>
+                <Link to="/" className="text-xl font-bold text-blue-600">{t('common.appName')}</Link>
               </div>
               <div className="flex items-center space-x-4">
-                <Link to="/report" className="text-gray-600 hover:text-gray-900">Report Lost Luggage</Link>
-                <Link to="/search" className="text-gray-600 hover:text-gray-900">Search</Link>
-                <Link to="/login" className="text-gray-600 hover:text-gray-900">Login</Link>
-                <Link to="/register" className="btn btn-primary">Register</Link>
+                <Link to="/report" className="text-gray-600 hover:text-gray-900">{t('navigation.report')}</Link>
+                <Link to="/search" className="text-gray-600 hover:text-gray-900">{t('navigation.search')}</Link>
+                <Link to="/login" className="text-gray-600 hover:text-gray-900">{t('navigation.login')}</Link>
+                <Link to="/register" className="btn btn-primary">{t('navigation.register')}</Link>
+                <LanguageSelector />
               </div>
             </div>
           </div>
@@ -30,33 +34,33 @@ function App() {
           <Routes>
             <Route path="/" element={
               <div className="text-center">
-                <h1 className="text-4xl font-bold text-gray-900 mb-4">Welcome to LostLuggage</h1>
+                <h1 className="text-4xl font-bold text-gray-900 mb-4">{t('home.welcome')}</h1>
                 <p className="text-xl text-gray-600 mb-8">
-                  Help us reunite travelers with their lost luggage
+                  {t('home.subtitle')}
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                   <div className="card card-hover">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-4">Report Lost Luggage</h2>
+                    <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('home.reportLuggage')}</h2>
                     <p className="text-gray-600 mb-6">
-                      Lost your luggage? File a detailed report to help us locate it.
+                      {t('home.reportDescription')}
                     </p>
                     <Link
                       to="/report"
                       className="btn btn-primary"
                     >
-                      File Report
+                      {t('home.fileReport')}
                     </Link>
                   </div>
                   <div className="card card-hover">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-4">Search Lost Luggage</h2>
+                    <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('home.searchLuggage')}</h2>
                     <p className="text-gray-600 mb-6">
-                      Looking for reported luggage? Search our database.
+                      {t('home.searchDescription')}
                     </p>
                     <Link
                       to="/search"
                       className="btn btn-secondary"
                     >
-                      Search
+                      {t('home.searchButton')}
                     </Link>
                   </div>
                 </div>

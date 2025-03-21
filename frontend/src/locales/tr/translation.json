@@ -1,0 +1,98 @@
+{
+  "common": {
+    "appName": "Kayıp Eşya",
+    "loading": "Yükleniyor...",
+    "error": "Hata",
+    "success": "Başarılı"
+  },
+  "navigation": {
+    "home": "Ana Sayfa",
+    "report": "Kayıp Eşya Bildir",
+    "search": "Ara",
+    "login": "Giriş",
+    "register": "Kayıt Ol",
+    "logout": "Çıkış"
+  },
+  "home": {
+    "welcome": "Kayıp Eşya'ya Hoş Geldiniz",
+    "subtitle": "Yolcuları kayıp eşyalarıyla buluşturmamıza yardımcı olun",
+    "reportLuggage": "Kayıp Eşya Bildir",
+    "reportDescription": "Eşyanızı mı kaybettiniz? Bulunmasına yardımcı olmak için ayrıntılı bir rapor doldurun.",
+    "fileReport": "Rapor Oluştur",
+    "searchLuggage": "Kayıp Eşya Ara",
+    "searchDescription": "Bildirilen eşyaları mı arıyorsunuz? Veritabanımızda arama yapın.",
+    "searchButton": "Ara"
+  },
+  "auth": {
+    "registerTitle": "Kayıt Ol",
+    "loginTitle": "Giriş Yap",
+    "name": "Tam İsim",
+    "email": "E-posta",
+    "password": "Şifre",
+    "confirmPassword": "Şifreyi Onayla",
+    "haveAccount": "Zaten hesabınız var mı?",
+    "loginHere": "Buradan giriş yapın",
+    "noAccount": "Hesabınız yok mu?",
+    "registerHere": "Buradan kayıt olun",
+    "otpTitle": "E-postanızı Doğrulayın",
+    "otpMessage": "Doğrulama kodunu şu adrese gönderdik",
+    "otpPlaceholder": "6 haneli kodu girin",
+    "otpVerify": "E-postayı Doğrula",
+    "otpResend": "Doğrulama kodunu yeniden gönder",
+    "otpBack": "Geri",
+    "passwordsDoNotMatch": "Şifreler eşleşmiyor",
+    "registrationFailed": "Kayıt başarısız oldu",
+    "registrationInitiated": "Kayıt başlatıldı! Lütfen gönderilen OTP ile e-postanızı doğrulayın.",
+    "verificationFailed": "Doğrulama başarısız oldu",
+    "emailVerified": "E-posta başarıyla doğrulandı! Ana sayfaya yönlendiriliyorsunuz...",
+    "resendOtpFailed": "Doğrulama kodunu yeniden gönderme başarısız oldu",
+    "otpResendSuccess": "Doğrulama kodu başarıyla gönderildi!",
+    "verifyEmail": "Lütfen e-postanızı doğrulayın. Yeni bir doğrulama kodu gönderildi.",
+    "loginSuccess": "Giriş başarılı! Ana sayfaya yönlendiriliyorsunuz..."
+  },
+  "luggage": {
+    "type": "Tip",
+    "color": "Renk",
+    "brand": "Marka",
+    "description": "Açıklama",
+    "status": "Durum",
+    "location": "Konum",
+    "dateFound": "Bulunma Tarihi",
+    "contactInfo": "İletişim Bilgileri",
+    "types": {
+      "suitcase": "Bavul",
+      "backpack": "Sırt Çantası",
+      "handbag": "El Çantası",
+      "other": "Diğer"
+    },
+    "statuses": {
+      "lost": "Kayıp",
+      "found": "Bulundu",
+      "claimed": "Talep Edildi"
+    },
+    "reportButton": "Raporu Gönder",
+    "searchButton": "Ara",
+    "filterButton": "Sonuçları Filtrele",
+    "clearButton": "Filtreleri Temizle",
+    "noResults": "Kriterlerinize uyan eşya bulunamadı.",
+    "searchLuggage": "Kayıp Eşya Ara",
+    "searchResults": "Arama Sonuçları",
+    "selectType": "Tip seçin",
+    "enterColor": "Renk girin",
+    "enterLocation": "Konum girin",
+    "reportLuggage": "Kayıp Eşya Bildir",
+    "size": "Boyut",
+    "weight": "Ağırlık (kg)",
+    "airportLocation": "Havalimanı Konumu",
+    "dateLost": "Kaybolma Tarihi",
+    "distinctiveFeatures": "Ayırt Edici Özellikler",
+    "contentsDescription": "İçerik Açıklaması",
+    "reportSuccess": "Eşya raporu başarıyla gönderildi!"
+  },
+  "language": {
+    "languageSelector": "Dil",
+    "english": "İngilizce",
+    "turkish": "Türkçe",
+    "german": "Almanca"
+  }
+} 

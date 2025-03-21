@@ -3,17 +3,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// Create reusable transporter object using SMTP transport
-const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST || 'smtp.gmail.com',
-  port: parseInt(process.env.EMAIL_PORT || 587),
-  secure: process.env.EMAIL_SECURE === 'true', 
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
-
 // Function to generate a random 6-digit OTP
 export const generateOTP = () => {
   const digits = '0123456789';
@@ -27,9 +16,30 @@ export const generateOTP = () => {
 // Function to send verification email
 export const sendVerificationEmail = async (email, name, otp) => {
   try {
+    // Always log the OTP to console for testing/development
+    console.log(`=================================================`);
+    console.log(`📧 VERIFICATION OTP FOR ${email}: ${otp}`);
+    console.log(`=================================================`);
+    
+    // In development mode, just return true after logging the OTP
+    if (process.env.NODE_ENV === 'development') {
+      return true;
+    }
+    
+    // Create a transporter
+    const transporter = nodemailer.createTransport({
+      host: process.env.EMAIL_HOST || 'smtp.gmail.com',
+      port: parseInt(process.env.EMAIL_PORT || '587'),
+      secure: process.env.EMAIL_SECURE === 'true',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+    
     // Email template
     const mailOptions = {
-      from: `"Lost Luggage" <${process.env.EMAIL_USER || 'noreply@lostluggage.com'}>`,
+      from: process.env.EMAIL_USER,
       to: email,
       subject: 'Email Verification - Lost Luggage App',
       html: `
@@ -45,12 +55,17 @@ export const sendVerificationEmail = async (email, name, otp) => {
       `,
     };
 
-    // Send email
-    const info = await transporter.sendMail(mailOptions);
-    console.log('Verification email sent:', info.messageId);
-    return true;
+    try {
+      // Try to send email
+      await transporter.sendMail(mailOptions);
+      console.log('Verification email sent successfully to:', email);
+      return true;
+    } catch (emailError) {
+      console.error('Error sending verification email:', emailError);
+      return false;
+    }
   } catch (error) {
-    console.error('Error sending verification email:', error);
+    console.error('Error in sendVerificationEmail:', error);
     return false;
   }
 };

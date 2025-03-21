@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTypedTranslation } from '../utils/translation';
 
 interface LuggageFormData {
   brand: string;
@@ -12,6 +13,7 @@ interface LuggageFormData {
 }
 
 const LuggageForm: React.FC = () => {
+  const { t } = useTypedTranslation();
   const [formData, setFormData] = useState<LuggageFormData>({
     brand: '',
     color: '',
@@ -26,7 +28,7 @@ const LuggageForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:3001/api/luggage/report', {
+      const response = await fetch('http://localhost:5000/api/luggage/report', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -35,7 +37,7 @@ const LuggageForm: React.FC = () => {
       });
       
       if (response.ok) {
-        alert('Luggage report submitted successfully!');
+        alert(t('luggage.reportSuccess'));
         // Reset form
         setFormData({
           brand: '',
@@ -48,11 +50,11 @@ const LuggageForm: React.FC = () => {
           contentsDescription: '',
         });
       } else {
-        alert('Error submitting report');
+        alert(t('common.error'));
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('Error submitting report');
+      alert(t('common.error'));
     }
   };
 
@@ -66,11 +68,11 @@ const LuggageForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6">Report Lost Luggage</h2>
+      <h2 className="text-2xl font-bold mb-6">{t('luggage.reportLuggage')}</h2>
       
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
-          Brand
+          {t('luggage.brand')}
           <input
             type="text"
             name="brand"
@@ -84,7 +86,7 @@ const LuggageForm: React.FC = () => {
 
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
-          Color
+          {t('luggage.color')}
           <input
             type="text"
             name="color"
@@ -98,7 +100,7 @@ const LuggageForm: React.FC = () => {
 
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
-          Size
+          {t('luggage.size')}
           <input
             type="text"
             name="size"
@@ -112,7 +114,7 @@ const LuggageForm: React.FC = () => {
 
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
-          Weight (kg)
+          {t('luggage.weight')}
           <input
             type="number"
             name="weight"
@@ -126,7 +128,7 @@ const LuggageForm: React.FC = () => {
 
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
-          Airport Location
+          {t('luggage.airportLocation')}
           <input
             type="text"
             name="airportLocation"
@@ -140,7 +142,7 @@ const LuggageForm: React.FC = () => {
 
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
-          Date Lost
+          {t('luggage.dateLost')}
           <input
             type="date"
             name="dateLost"
@@ -154,7 +156,7 @@ const LuggageForm: React.FC = () => {
 
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
-          Distinctive Features
+          {t('luggage.distinctiveFeatures')}
           <textarea
             name="distinctiveFeatures"
             value={formData.distinctiveFeatures}
@@ -167,7 +169,7 @@ const LuggageForm: React.FC = () => {
 
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
-          Contents Description
+          {t('luggage.contentsDescription')}
           <textarea
             name="contentsDescription"
             value={formData.contentsDescription}
@@ -182,7 +184,7 @@ const LuggageForm: React.FC = () => {
         type="submit"
         className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-colors"
       >
-        Submit Report
+        {t('luggage.reportButton')}
       </button>
     </form>
   );
