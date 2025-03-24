@@ -79,7 +79,7 @@ const LuggageSearch: React.FC = () => {
         <p className="text-gray-600">{t('home.searchDescription')}</p>
       </div>
       
-      <div className="mb-8 bg-white rounded-lg shadow-md border border-gray-100 p-6 fade-in">
+      <div className="mb-8 bg-white rounded-lg shadow-sm border border-gray-100 p-6 fade-in">
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
@@ -144,7 +144,7 @@ const LuggageSearch: React.FC = () => {
 
           <button
             type="submit"
-            className="w-full bg-sky-500 text-white py-3 px-4 rounded-md hover:bg-sky-600 transition-colors font-medium flex items-center justify-center"
+            className="w-full bg-red-600 text-white py-3 px-4 rounded-md hover:bg-red-700 transition-colors font-medium flex items-center justify-center"
             disabled={isLoading}
           >
             {isLoading ? (
@@ -165,7 +165,7 @@ const LuggageSearch: React.FC = () => {
       {hasSearched && (
         <>
           {searchResults.length > 0 ? (
-            <div className="bg-white rounded-lg shadow-md border border-gray-100 p-6 fade-in">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 fade-in">
               <h3 className="text-xl font-bold text-gray-900 mb-4 border-b pb-2">{t('luggage.searchResults')}</h3>
               <div className="space-y-6">
                 {searchResults.map((result) => (
@@ -173,7 +173,7 @@ const LuggageSearch: React.FC = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
                         <div className="flex items-center mb-2">
-                          <div className="p-2 rounded-full bg-indigo-100 text-indigo-500 mr-2">
+                          <div className="p-2 rounded-full bg-gray-100 text-gray-900 mr-2">
                             <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                               <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
                               <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
@@ -201,7 +201,7 @@ const LuggageSearch: React.FC = () => {
                         <p className="text-sm mb-1"><span className="font-medium">{t('luggage.dateFound')}:</span> {new Date(result.dateFound).toLocaleDateString()}</p>
                         <p className="text-sm">
                           <span className="font-medium">{t('luggage.contactInfo')}:</span>{' '}
-                          <a href={`mailto:${result.contactInfo.email}`} className="text-indigo-600 hover:underline">
+                          <a href={`mailto:${result.contactInfo.email}`} className="text-red-600 hover:underline">
                             {result.contactInfo.name}
                           </a>
                         </p>

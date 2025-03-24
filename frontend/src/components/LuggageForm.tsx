@@ -89,7 +89,7 @@ const LuggageForm: React.FC = () => {
         </div>
       )}
       
-      <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md border border-gray-100 p-6 fade-in">
+      <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 fade-in">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div>
             <label className="block text-gray-700 text-sm font-medium mb-2">
@@ -209,7 +209,7 @@ const LuggageForm: React.FC = () => {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-indigo-600 text-white py-3 px-4 rounded-md hover:bg-indigo-700 transition-colors font-medium flex items-center justify-center"
+          className="w-full bg-black text-white py-3 px-4 rounded-md hover:bg-gray-800 transition-colors font-medium flex items-center justify-center"
         >
           {isSubmitting ? (
             <>
