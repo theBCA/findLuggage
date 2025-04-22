@@ -41,7 +41,7 @@
   "auth": {
     "loginTitle": "Giriş",
     "registerTitle": "Kayıt Ol",
-    "name": "Tam İsim",
+    "name": "İsim",
     "email": "E-posta",
     "password": "Şifre",
     "confirmPassword": "Şifre Tekrar",
